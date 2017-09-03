@@ -37,17 +37,20 @@ const int kAdded = 1;
 const int kDeleted = 2;
 }
 
+//构造函数，创建epollfd，初始化poller和events
 EPollPoller::EPollPoller(EventLoop* loop)
   : Poller(loop),
     epollfd_(::epoll_create1(EPOLL_CLOEXEC)),
     events_(kInitEventListSize)
 {
+  //创建失败
   if (epollfd_ < 0)
   {
     LOG_SYSFATAL << "EPollPoller::EPollPoller";
   }
 }
 
+//析构函数，关闭epollfd
 EPollPoller::~EPollPoller()
 {
   ::close(epollfd_);

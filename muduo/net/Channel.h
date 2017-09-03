@@ -65,11 +65,12 @@ class Channel : boost::noncopyable
   /// Tie this channel to the owner object managed by shared_ptr,
   /// prevent the owner object being destroyed in handleEvent.
   void tie(const boost::shared_ptr<void>&);
-
+  //返回
   int fd() const { return fd_; }
 
-
+  //返回其关心的IO事件
   int events() const { return events_; }
+
   void set_revents(int revt) { revents_ = revt; } // used by pollers
   // int revents() const { return revents_; }
   bool isNoneEvent() const { return events_ == kNoneEvent; }

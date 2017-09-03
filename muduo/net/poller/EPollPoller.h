@@ -45,7 +45,8 @@ class EPollPoller : public Poller
   void update(int operation, Channel* channel);
 
   typedef std::vector<struct epoll_event> EventList;
-
+   
+  //epollfd_
   int epollfd_;
   EventList events_;
 };
