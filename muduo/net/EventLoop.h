@@ -125,6 +125,8 @@ class EventLoop : boost::noncopyable
       abortNotInLoopThread();
     }
   }
+
+  //判断当前线程是否是loop所在的线程
   bool isInLoopThread() const { return threadId_ == CurrentThread::tid(); }
   // bool callingPendingFunctors() const { return callingPendingFunctors_; }
   bool eventHandling() const { return eventHandling_; }
@@ -174,7 +176,7 @@ class EventLoop : boost::noncopyable
   boost::any context_;
 
   // scratch variables
-  // Channel 对象列表
+  //当前活跃的 Channel 对象列表
   ChannelList activeChannels_;
   //Channel 指针
   Channel* currentActiveChannel_;

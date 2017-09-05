@@ -29,6 +29,7 @@ __thread EventLoop* t_loopInThisThread = 0;
 
 const int kPollTimeMs = 10000;
 
+//eventfd使用，用于线程间的通信
 int createEventfd()
 {
   int evtfd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
@@ -164,10 +165,12 @@ void EventLoop::runInLoop(const Functor& cb)
 {
   if (isInLoopThread())
   {
+    //如果当前线程为loop线程，直接在该线程内运行
     cb();
   }
   else
   {
+    //否则把其添加到pendingFunctors_中
     queueInLoop(cb);
   }
 }
@@ -175,6 +178,7 @@ void EventLoop::runInLoop(const Functor& cb)
 void EventLoop::queueInLoop(const Functor& cb)
 {
   {
+    //互斥锁保护
   MutexLockGuard lock(mutex_);
   pendingFunctors_.push_back(cb);
   }
