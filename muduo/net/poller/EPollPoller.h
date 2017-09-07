@@ -48,6 +48,7 @@ class EPollPoller : public Poller
    
   //epollfd_
   int epollfd_;
+  //events_
   EventList events_;
 };
 

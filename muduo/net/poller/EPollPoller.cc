@@ -23,6 +23,7 @@ using namespace muduo::net;
 
 // On Linux, the constants of poll(2) and epoll(4)
 // are expected to be the same.
+// 一些对于Epoll在Linux中的断言
 BOOST_STATIC_ASSERT(EPOLLIN == POLLIN);
 BOOST_STATIC_ASSERT(EPOLLPRI == POLLPRI);
 BOOST_STATIC_ASSERT(EPOLLOUT == POLLOUT);
@@ -56,6 +57,8 @@ EPollPoller::~EPollPoller()
   ::close(epollfd_);
 }
 
+
+//监听事件，并将其传给activeChannels
 Timestamp EPollPoller::poll(int timeoutMs, ChannelList* activeChannels)
 {
   LOG_TRACE << "fd total count " << channels_.size();
@@ -69,6 +72,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelList* activeChannels)
   {
     LOG_TRACE << numEvents << " events happended";
     fillActiveChannels(numEvents, activeChannels);
+    //如果存储的空间不够，则给其分配更多的空间
     if (implicit_cast<size_t>(numEvents) == events_.size())
     {
       events_.resize(events_.size()*2);
@@ -90,6 +94,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelList* activeChannels)
   return now;
 }
 
+//将发生的事件放入activeChannels
 void EPollPoller::fillActiveChannels(int numEvents,
                                      ChannelList* activeChannels) const
 {
@@ -152,6 +157,8 @@ void EPollPoller::updateChannel(Channel* channel)
   }
 }
 
+
+//从epoll中移除Channel对应的socket
 void EPollPoller::removeChannel(Channel* channel)
 {
   Poller::assertInLoopThread();
@@ -173,6 +180,8 @@ void EPollPoller::removeChannel(Channel* channel)
   channel->set_index(kNew);
 }
 
+
+//对给定的描述符进行状态的改变
 void EPollPoller::update(int operation, Channel* channel)
 {
   struct epoll_event event;
@@ -195,6 +204,7 @@ void EPollPoller::update(int operation, Channel* channel)
   }
 }
 
+//返回对应字符串
 const char* EPollPoller::operationToString(int op)
 {
   switch (op)
