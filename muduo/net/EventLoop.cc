@@ -115,6 +115,7 @@ void EventLoop::loop()
   while (!quit_)
   {
     activeChannels_.clear();
+    //EventLoop主要阻塞在此处
     pollReturnTime_ = poller_->poll(kPollTimeMs, &activeChannels_);
     ++iteration_;
     
