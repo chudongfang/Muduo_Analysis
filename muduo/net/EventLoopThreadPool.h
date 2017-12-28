@@ -54,7 +54,7 @@ class EventLoopThreadPool : boost::noncopyable
 
  private:
 
-  EventLoop* baseLoop_;
+  EventLoop* baseLoop_; //指针指向一个Evenloop对象
   string name_;
   bool started_;
   int numThreads_;
