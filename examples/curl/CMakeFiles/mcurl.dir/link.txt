@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/mcurl.dir/mcurl.o  -o mcurl  -L/home/cdf/muduo-master/examples/curl -rdynamic libmuduo_curl.a -lmuduo_net -lcurl 

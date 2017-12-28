@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/cdf/muduo-master/examples/curl/Curl.cc
+Curl.h
+/home/cdf/muduo-master/examples/curl/Curl.h
+muduo/base/Logging.h
+-
+muduo/net/Channel.h
+-
+muduo/net/EventLoop.h
+-
+boost/bind.hpp
+-
+curl/curl.h
+-
+assert.h
+-
+
+/home/cdf/muduo-master/examples/curl/Curl.h
+muduo/base/StringPiece.h
+-
+boost/function.hpp
+-
+boost/noncopyable.hpp
+-
+boost/shared_ptr.hpp
+-
+boost/enable_shared_from_this.hpp
+-
+boost/scoped_ptr.hpp
+-
+

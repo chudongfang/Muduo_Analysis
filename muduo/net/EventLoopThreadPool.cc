@@ -18,7 +18,7 @@
 using namespace muduo;
 using namespace muduo::net;
 
-
+//IO线程池
 EventLoopThreadPool::EventLoopThreadPool(EventLoop* baseLoop, const string& nameArg)
   : baseLoop_(baseLoop),
     name_(nameArg),
