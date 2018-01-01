@@ -21,17 +21,17 @@
 using namespace muduo;
 using namespace muduo::net;
 
-TcpServer::TcpServer(EventLoop* loop,
+TcpServer::TcpServer(EventLoop* loop,//事件循环
                      const InetAddress& listenAddr,
                      const string& nameArg,
                      Option option)
   : loop_(CHECK_NOTNULL(loop)),
-    ipPort_(listenAddr.toIpPort()),
-    name_(nameArg),
+    ipPort_(listenAddr.toIpPort()),//IP地址
+    name_(nameArg),//server名字
     acceptor_(new Acceptor(loop, listenAddr, option == kReusePort)),
-    threadPool_(new EventLoopThreadPool(loop, name_)),
-    connectionCallback_(defaultConnectionCallback),
-    messageCallback_(defaultMessageCallback),
+    threadPool_(new EventLoopThreadPool(loop, name_)),//I/O线程池
+    connectionCallback_(defaultConnectionCallback),//链接
+    messageCallback_(defaultMessageCallback),//FIXME 信息回调
     nextConnId_(1)
 {
   acceptor_->setNewConnectionCallback(
@@ -43,7 +43,7 @@ TcpServer::~TcpServer()
   loop_->assertInLoopThread();
   LOG_TRACE << "TcpServer::~TcpServer [" << name_ << "] destructing";
 
-  for (ConnectionMap::iterator it(connections_.begin());
+  for (ConnectionMap::iterator it(connections_.begin()); //connections map
       it != connections_.end(); ++it)
   {
     TcpConnectionPtr conn = it->second;
@@ -54,7 +54,7 @@ TcpServer::~TcpServer()
   }
 }
 
-void TcpServer::setThreadNum(int numThreads)
+void TcpServer::setThreadNum(int numThreads)//设置线程个数,调用 threadPool_中的setThreadNum
 {
   assert(0 <= numThreads);
   threadPool_->setThreadNum(numThreads);
