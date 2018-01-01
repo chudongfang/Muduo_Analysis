@@ -76,17 +76,17 @@ class TcpServer : boost::noncopyable
   /// It's harmless to call it multiple times.
   /// Thread safe.
   void start();
-
+  /// 设置链接回调
   /// Set connection callback.
   /// Not thread safe.
   void setConnectionCallback(const ConnectionCallback& cb)
   { connectionCallback_ = cb; }
-
+  /// 设置消息回调
   /// Set message callback.
   /// Not thread safe.
   void setMessageCallback(const MessageCallback& cb)
   { messageCallback_ = cb; }
-
+  /// 设置写信息回调
   /// Set write complete callback.
   /// Not thread safe.
   void setWriteCompleteCallback(const WriteCompleteCallback& cb)
